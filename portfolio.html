@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>James Youle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111317;
+    --paper:#EDEAE2;
+    --paper-dim:#DCD8CC;
+    --brass:#B8862E;
+    --brass-bright:#D9A441;
+    --graphite:#6E7681;
+    --line: rgba(237,234,226,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  a{color:inherit;}
+  ::selection{background:var(--brass); color:var(--ink);}
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em;}
+
+  nav.tabs{
+    position:fixed; top:0; left:0; height:100vh; width:64px;
+    display:flex; flex-direction:column; justify-content:center; gap:2px;
+    z-index:50; border-right:1px solid var(--line);
+  }
+  nav.tabs a{
+    writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
+    padding:22px 0; text-align:center; text-decoration:none;
+    font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--graphite); border-bottom:1px solid var(--line);
+    transition:color 0.25s ease, background 0.25s ease;
+  }
+  nav.tabs a:last-child{border-bottom:none;}
+  nav.tabs a:hover, nav.tabs a:focus-visible{
+    color:var(--brass-bright); background:rgba(184,134,46,0.08); outline:none;
+  }
+  nav.tabs a:focus-visible{box-shadow:inset 2px 0 0 var(--brass-bright);}
+
+  main{margin-left:64px;}
+  @media (max-width:640px){
+    nav.tabs{width:100%; height:auto; position:sticky; top:0; flex-direction:row; border-right:none; border-bottom:1px solid var(--line);}
+    nav.tabs a{writing-mode:horizontal-tb; transform:none; flex:1; padding:14px 0; border-bottom:none; border-right:1px solid var(--line);}
+    nav.tabs a:last-child{border-right:none;}
+    main{margin-left:0;}
+  }
+
+  section{padding:120px 8vw; border-bottom:1px solid var(--line); position:relative;}
+  section:last-of-type{border-bottom:none;}
+
+  .eyebrow{
+    font-size:0.78rem; color:var(--brass-bright); text-transform:uppercase;
+    letter-spacing:0.18em; margin-bottom:18px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:24px; height:1px; background:var(--brass-bright);}
+
+  .hero{min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding-top:80px; padding-bottom:80px;}
+  h1{
+    font-family:'Fraunces', serif; font-weight:500;
+    font-size:clamp(3rem, 9vw, 6.5rem); line-height:0.98; margin:0 0 28px 0; max-width:14ch;
+  }
+  h1 em{font-style:italic; font-weight:300; color:var(--paper-dim);}
+  .role-line{font-size:1.15rem; color:var(--paper-dim); max-width:50ch; line-height:1.6; margin-bottom:44px;}
+  .role-line strong{color:var(--paper); font-weight:600;}
+  .hero-meta{display:flex; gap:56px; flex-wrap:wrap;}
+  .hero-meta div{font-size:0.85rem;}
+  .hero-meta .label{color:var(--graphite); margin-bottom:6px;}
+
+  .stamp{
+    position:absolute; top:110px; right:8vw; width:118px; height:118px;
+    border:1.5px solid var(--brass-bright); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    transform:rotate(-9deg); color:var(--brass-bright);
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; letter-spacing:0.08em;
+    text-transform:uppercase; line-height:1.4; opacity:0.9;
+  }
+  .stamp::before{content:""; position:absolute; inset:8px; border:1px solid var(--brass-bright); border-radius:50%; opacity:0.5;}
+  @media (max-width:800px){ .stamp{display:none;} }
+
+  h2.section-title{font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 4vw, 2.8rem); margin:0 0 60px 0;}
+
+  .entry{
+    display:grid; grid-template-columns:140px 1fr 160px; gap:32px;
+    padding:36px 0; border-top:1px solid var(--line); align-items:start;
+  }
+  .entry:last-child{border-bottom:1px solid var(--line);}
+  .entry-date{font-family:'IBM Plex Mono', monospace; color:var(--brass-bright); font-size:0.85rem; padding-top:4px;}
+  .entry-title{font-family:'Fraunces', serif; font-size:1.5rem; font-weight:500; margin:0 0 4px 0;}
+  .entry-org{color:var(--graphite); font-size:0.85rem; margin-bottom:12px; font-family:'IBM Plex Mono', monospace;}
+  .entry-desc{color:var(--paper-dim); font-size:0.98rem; line-height:1.6; max-width:58ch;}
+  .entry-tags{display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start;}
+  .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--graphite);
+    border:1px solid var(--line); padding:5px 10px; border-radius:2px; white-space:nowrap;
+  }
+  @media (max-width:720px){
+    .entry{grid-template-columns:1fr; gap:8px;}
+    .entry-date{padding-top:0;}
+  }
+
+  .about-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:80px;}
+  .about-text p{font-size:1.1rem; line-height:1.75; color:var(--paper-dim); max-width:58ch;}
+  .about-text p strong{color:var(--paper);}
+  .skills-list{list-style:none; padding:0; margin:0;}
+  .skills-list li{
+    display:flex; justify-content:space-between; padding:14px 0;
+    border-top:1px solid var(--line); font-size:0.95rem;
+  }
+  .skills-list li:last-child{border-bottom:1px solid var(--line);}
+  .skills-list .skill-cat{color:var(--graphite); font-family:'IBM Plex Mono', monospace; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em;}
+  @media (max-width:800px){ .about-grid{grid-template-columns:1fr; gap:48px;} }
+
+  .contact-inner{display:flex; flex-direction:column; align-items:flex-start;}
+  .contact-big{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:400;
+    font-size:clamp(1.8rem, 5vw, 3.2rem); margin:0 0 40px 0; max-width:22ch; line-height:1.25;
+  }
+  .contact-links{display:flex; gap:36px; flex-wrap:wrap; margin-bottom:80px;}
+  .contact-links a{
+    text-decoration:none; border-bottom:1px solid var(--brass-bright); padding-bottom:4px;
+    font-size:0.95rem; color:var(--paper); transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .contact-links a:hover, .contact-links a:focus-visible{color:var(--brass-bright); outline:none;}
+  footer{
+    display:flex; justify-content:space-between; width:100%;
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--graphite);
+    flex-wrap:wrap; gap:12px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabs" aria-label="Section navigation">
+  <a href="#index">Index</a>
+  <a href="#experience">Experience</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<main>
+
+  <section class="hero" id="index">
+    <div class="stamp">Bristol<br>UK<br>— 2026 —</div>
+    <div class="eyebrow mono">Portfolio</div>
+    <h1>James Youle<br><em>engineer,<br>musician.</em></h1>
+    <p class="role-line">
+      <strong>First Line Engineer at Penelope Technical Ltd</strong>, studying Creative Music Technology
+      at UWE Bristol. I moved into engineering after a hospitality background and a research contract
+      in optical gaming eyewear — I like learning how things work from the ground up.
+    </p>
+    <div class="hero-meta mono">
+      <div><div class="label">Based in</div>Bristol, UK</div>
+      <div><div class="label">Currently</div>First Line Engineer</div>
+      <div><div class="label">Studying</div>Creative Music Technology, BSc</div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="eyebrow mono">Experience</div>
+    <h2 class="section-title">Where I've worked.</h2>
+
+    <div class="entry">
+      <div class="entry-date mono">2024 — Present</div>
+      <div>
+        <h3 class="entry-title">First Line Engineer</h3>
+        <div class="entry-org">Penelope Technical Ltd</div>
+        <p class="entry-desc">Providing first-line technical support and troubleshooting, working directly with customers and colleagues to resolve issues efficiently.</p>
+      </div>
+      <div class="entry-tags">
+        <span class="tag">Technical Support</span>
+        <span class="tag">Current</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date mono">2024</div>
+      <div>
+        <h3 class="entry-title">Product Research Contractor</h3>
+        <div class="entry-org">Inspecs Ltd — REGEN Optics Project</div>
+        <p class="entry-desc">Ran an independent research project into optical gaming eyewear, reaching out to potential customers and inviting them to take part as affiliates. Collated findings and presented results back to managers.</p>
+      </div>
+      <div class="entry-tags">
+        <span class="tag">Research</span>
+        <span class="tag">Self-directed</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date mono">2022 — 2024</div>
+      <div>
+        <h3 class="entry-title">Kitchen Assistant</h3>
+        <div class="entry-org">The Temple Inn</div>
+        <p class="entry-desc">Supported meal preparation during service, led end-of-service clean downs and weekly deep cleans, and helped with stock ordering and supplier contact.</p>
+      </div>
+      <div class="entry-tags">
+        <span class="tag">Hospitality</span>
+        <span class="tag">Team work</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date mono">2021 — 2022</div>
+      <div>
+        <h3 class="entry-title">Kitchen Porter</h3>
+        <div class="entry-org">The Lazy Lobster, Chew Magna</div>
+        <p class="entry-desc">My first job — washing dishes, preparing starters and desserts, and closing down the kitchen at the end of service.</p>
+      </div>
+      <div class="entry-tags">
+        <span class="tag">First job</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="eyebrow mono">About</div>
+    <h2 class="section-title">The short version.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm from Temple Cloud, near Bristol. I've worked in the restaurant and pub sector locally since
+        I was 15, which gave me an early grounding in working with people, keeping calm under pressure,
+        and getting things done as part of a team — starting as a kitchen porter at The Lazy Lobster,
+        then as a kitchen assistant at The Temple Inn.</p>
+        <p>After finishing my A-levels I took on a <strong>product research contract with Inspecs Ltd</strong>
+        in Bath, helping develop a gaming eyewear brand — my first taste of working independently on a
+        proper project. I'm now a <strong>First Line Engineer at Penelope Technical Ltd</strong>, and studying
+        Creative Music Technology at UWE Bristol.</p>
+        <p>Outside of work, music is a big part of my life — I play a range of instruments, specialising
+        in guitar, and perform at open mic nights around Bristol. It's a long-term ambition of mine to
+        work in the music industry.</p>
+      </div>
+      <ul class="skills-list mono">
+        <li><span class="skill-cat">Support</span><span>Customer service, troubleshooting</span></li>
+        <li><span class="skill-cat">Operations</span><span>Inventory, health & safety compliance</span></li>
+        <li><span class="skill-cat">Teamwork</span><span>Presentation, adaptability</span></li>
+        <li><span class="skill-cat">Music</span><span>Guitar, live performance</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="eyebrow mono">Get in touch</div>
+    <div class="contact-inner">
+      <p class="contact-big">Always open to a conversation — work, music, or otherwise.</p>
+      <div class="contact-links">
+        <a href="mailto:james.a.y.701@gmail.com">james.a.y.701@gmail.com</a>
+        <a href="https://www.linkedin.com/in/james-youle" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <footer>
+        <span>© 2026 James Youle</span>
+        <span>Bristol, UK</span>
+      </footer>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
